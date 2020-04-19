@@ -2,13 +2,20 @@ const express = require('express');
 const app = express();
 const { config } = require('./config/index.js');
 const moviesApi = require('./routes/movies.js');
+const { logErrors, errorHandler } = require('./utils/middlewares/errorHandlers');
+
+app.use(express.json());
+app.use(logErrors);
+app.use(errorHandler);
+
+moviesApi(app);
 
 app.listen(config.port, () => {
     console.log(`Listening http://localhost:${config.port}`);
 });
 
 
-moviesApi(app);
+
 
 
 
